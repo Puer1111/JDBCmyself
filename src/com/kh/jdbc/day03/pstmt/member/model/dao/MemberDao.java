@@ -104,10 +104,10 @@ public class MemberDao {
 	private Member rsetToMember(ResultSet rset) throws SQLException {
 
 		Member member = new Member();
-		String MemberID = rset.getString("MEMBER_ID");
-		member.setMemberID(MemberID);
-//			String MemberPw = rset.getString("MEMBER_PW");
-//			member.setMemberPW(MemberPw);
+//		String MemberID = rset.getString("MEMBER_ID");
+		member.setMemberID(rset.getString("MEMBER_ID"));
+//		String MemberPw = rset.getString("MEMBER_PW");
+//		member.setMemberPW(MemberPw);
 		member.setMemberPW(rset.getString("MEMBER_PW"));
 		member.setMemberName(rset.getString("MEMBER_NAME"));
 		member.setGender(rset.getString("GENDER"));
@@ -169,12 +169,16 @@ public class MemberDao {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, memberID);
 			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				result = rsetToMember(rset);
+			}
 // Statement 사용			
 			// stmt = conn.createStatement();
 //			String query = "select * from member_tbl where member_id = '" + member.getMemberID() + "' and member_pw = '"
 //					+ member.getMemberPW() + "'";
 //			rset = stmt.executeQuery(query);
-
+		
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -200,13 +204,12 @@ public class MemberDao {
 	public int UpdateMember(Member member) {
 		PreparedStatement pstmt = null;
 		Connection conn = null;
-		ResultSet rset = null;
 		int result = 0;
 
 		try {
 			Class.forName(Driver_name);
 			conn = DriverManager.getConnection(URL, ID, PW);
-
+			conn.setAutoCommit(false);
 			String query = "Update member_tbl set Member_PW = ? , member_email = ? , member_phone = ? , member_address = ? , member_hobby = ? , member_ID = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, member.getMemberPW());
@@ -232,7 +235,7 @@ public class MemberDao {
 			try {
 				conn.close();
 				pstmt.close();
-				rset.close();
+			
 			}catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

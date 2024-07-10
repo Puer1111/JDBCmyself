@@ -17,7 +17,7 @@ public class MemberController {
 
 	public Member checkLogin(Member member) {
 		Member result = mDao.selectOne(member);
-		return null;
+		return result;
 	}
 
 	public int deleteMember(String memberID) {
@@ -27,7 +27,7 @@ public class MemberController {
 
 	public Member checkMember(String memberID) {
 		Member result = mDao.selectOne(memberID);
-		return null;
+		return result;
 	}
 
 	public int updateMember(Member member) {

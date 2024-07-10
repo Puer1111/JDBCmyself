@@ -111,11 +111,11 @@ public class MemberView {
 				" 이름: %s\t ," + 
 				" 성별: %s\t ," + 
 				" 나이: %d\t ," + 
-				" 이메일:%s\t ,," +
+				" 이메일:%s\t ," +
 				" 전화번호: %s\t ,"+ 
 				" 주소: %s\t ," + 
 				" 취미 : %s\t ," + 
-				" 날짜: %t\t ",
+				" 날짜: %s\t ",
 				member.getMemberID(), 
 				member.getMemberName(),
 				member.getGender(), 
